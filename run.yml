@@ -1,0 +1,13 @@
+name: Generate Tweets
+on:
+  schedule:
+    - cron: '0 0 * * *'  # Daily at 00:00 UTC
+  workflow_dispatch:  # Manual trigger option
+jobs:
+  generate:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+      - run: curl -X POST -H "Authorization: Bearer ${{ secrets.HF_TOKEN }}" https://api.huggingface.co/spaces/pachu007/tweet-bot/run
+        env:
+          HF_TOKEN: ${{ secrets.HF_TOKEN }}
